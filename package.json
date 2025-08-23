@@ -1,0 +1,24 @@
+{
+	"name": "@zetafield/flux-monorepo",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "pnpm -r build",
+		"dev": "pnpm --filter @zetafield/flux dev",
+		"changeset": "changeset",
+		"changeset:version": "changeset version",
+		"changeset:publish": "changeset publish",
+		"release": "pnpm build && pnpm changeset:publish",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"site:dev": "pnpm --filter website run dev",
+		"site:build": "pnpm --filter website run build",
+		"site:preview": "pnpm --filter website run preview"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.29.5",
+		"@shopify/prettier-plugin-liquid": "^1.9.3",
+		"prettier": "3.6.2",
+		"prettier-plugin-tailwindcss": "^0.6.14"
+	}
+}

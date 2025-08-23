@@ -1,0 +1,17 @@
+{
+	"name": "website",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "flux dev",
+		"build": "flux build",
+		"preview": "flux preview"
+	},
+	"devDependencies": {
+		"@tailwindcss/typography": "^0.5.16",
+		"@tailwindcss/vite": "^4.0.0",
+		"@zetafield/flux": "workspace:*",
+		"tailwindcss": "^4.1.11",
+		"vite": "^7.0.0"
+	}
+}

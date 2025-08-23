@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+pnpm-debug.log
+.DS_Store
+_site
+.dist
+.flux

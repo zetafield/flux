@@ -1,0 +1,42 @@
+<nav class="docs-nav">
+  {% if data.nav and data.nav.first and data.nav.first.items %}
+    {% for section in data.nav %}
+      <div class="docs-nav-section">
+        <h3 class="docs-nav-title">{{ section.group }}</h3>
+        <ul class="docs-nav-list">
+          {% for item in section.items %}
+            <li>
+              <a
+                href="{{ item.url }}"
+                class="nav-link{% if page.url == item.url %} active{% endif %}"
+                {% if page.url == item.url %}
+                  aria-current="page"
+                {% endif %}
+              >
+                {{ item.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="docs-nav-section">
+      <ul class="docs-nav-list">
+        {% for item in data.nav %}
+          <li>
+            <a
+              href="{{ item.url }}"
+              class="nav-link{% if page.url == item.url %} active{% endif %}"
+              {% if page.url == item.url %}
+                aria-current="page"
+              {% endif %}
+            >
+              {{ item.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</nav>

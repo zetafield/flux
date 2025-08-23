@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      {{ page.title }}
+      -
+      {{ data.site.name }}
+    </title>
+    <meta name="description" content="{{ page.description | default: data.site.description }}">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="icon" href="/favicon.svg">
+  </head>
+  <body>
+    {% include 'header' %}
+    <main>
+      {{ content }}
+    </main>
+  </body>
+</html>

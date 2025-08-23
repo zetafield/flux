@@ -1,0 +1,20 @@
+---
+title: Nested
+layout: page
+---
+
+<h1>Nested</h1>
+<p>This is a nested page.</p>
+
+<h2>Pages in this section</h2>
+    <ul>
+  {% if collections and collections.nested and collections.nested.size > 0 %}
+    {% for page in collections.nested %}
+      <li>
+        <a href="{{ page.url }}">{{ page.url }} - {{ page.title }}</a>
+      </li>
+    {% endfor %}
+  {% else %}
+    <li>No pages found.</li>
+  {% endif %}
+</ul>
