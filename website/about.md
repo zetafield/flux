@@ -1,6 +1,5 @@
 ---
 title: About
-layout: base
 ---
 
 # About Flux

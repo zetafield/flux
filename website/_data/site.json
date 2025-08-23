@@ -2,6 +2,6 @@
 	"name": "Flux",
 	"title": "Flux - A minimalistic static site generator",
 	"description": "Flux is a minimal Vite-powered, LiquidJS-based, zero-JS static site generator designed for learning and simplicity.",
-	"url": "https://flux.dev",
+	"url": "https://flux.zetafield.com",
 	"github": "https://github.com/zetafield/flux"
 }

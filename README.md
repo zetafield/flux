@@ -1,192 +1,141 @@
-# Flux
+# Flux - A Minimalistic Static Site Generator
 
-A minimal Vite-powered, LiquidJS-based, zero-JS static site generator designed for learning and simplicity.
+Flux is built for folks who want to learn web fundamentals the fun way—by keeping things simple and straightforward.
 
-## Philosophy
+We're big fans of vanilla HTML, CSS, and JavaScript here. Start with just one `.html` page—that's it! Once you've got that down, throw in some CSS to make it look amazing. Want to add some interactivity? Sprinkle in a bit of JavaScript and watch your page come to life. It's pretty cool!
 
-**Minimal & Educational** - Flux teaches vanilla HTML, CSS, and JavaScript fundamentals without complex abstractions. Start simple, grow naturally.
+Planning to build a blog or portfolio? Flux makes it easy to set up common layouts for all your pages, and you can write your content in Markdown (because who doesn't love Markdown?). This way, you'll gradually pick up all the essential web development skills. There's something really satisfying about seeing your handcrafted code turn into a real website.
 
-**Industry Standards** - Built with proven tools (LiquidJS, Vite) that provide transferable skills you'll use in real projects.
+Now, if you're thinking about adding React or Vue to the mix, pause for a second—do you actually need them? Sometimes vanilla JavaScript can handle what you're after. But hey, if you do need something more powerful, there are great options out there like Astro.
 
-**Static First** - Generate clean, deployable static files optimized for CDN hosting. No runtime dependencies.
+Behind the scenes, we use Vite to make sure everything runs smoothly from development to deployment.
+
+The best part? Everything outputs as static files, so you can deploy pretty much anywhere—GitHub Pages, Netlify, Vercel, Cloudflare Pages, AWS S3, you name it!
 
 ## Quick Start
 
 ```bash
 npm create @zetafield/flux
-# Follow the interactive prompts to set up your project
+# Follow the interactive prompts
 cd your-project-name
 npm run dev
 ```
 
-## What You'll Learn
+Visit `http://localhost:3589` and start building!
 
-**Progressive Learning Path:**
+## What You Get
 
-1. Static HTML, CSS, and JavaScript basics
-2. Template includes and variables with Liquid
-3. Markdown for content creation
-4. Frontmatter and data-driven pages
-5. Loops, conditionals, and dynamic content
+- **Live reloading** during development
+- **Markdown support** for easy writing  
+- **Liquid templates** for consistent designs
+- **Optimized builds** for production
+- **Deploy anywhere** - just static files
 
-**Skills That Transfer:**
+## Template Starters
 
-- **LiquidJS** → Shopify theme development
-- **Vite** → Modern JavaScript tooling
-- **Static sites** → CDN deployment strategies
-- **Asset optimization** → Production web performance
+Choose your starting point during setup:
 
-## Technology Stack
-
-- **Templating**: LiquidJS (Shopify-compatible)
-- **Build Tool**: Vite (fast dev server + optimization)
-- **Content**: Markdown with frontmatter support
-- **Assets**: Automatic CSS/JS hashing for CDN caching
+- **Empty** - Only package.json, build from scratch
+- **Minimal** - Homepage with basic layout (recommended)
+- **Blog** - Ready for blogging with posts and layouts
 
 ## Project Structure
 
 ```
-my-site/
-├── src/
-│   ├── index.liquid        # Your pages
-│   ├── about.md           # Markdown support
-│   ├── assets/
-│   │   ├── css/style.css  # Auto-optimized & hashed
-│   │   ├── js/main.js     # Auto-optimized & hashed
-│   │   └── images/        # Static files
-│   ├── _layouts/          # Page templates
-│   ├── _components/       # Reusable partials
-│   └── _data/             # Site-wide JSON data
-└── dist/                  # Generated static output
+my-blog/
+├── index.md              # Your homepage
+├── about.md              # Pages (Markdown or HTML)
+├── blog/                 # Organize content in folders
+│   └── first-post.md
+├── assets/
+│   ├── css/main.css      # Styles (processed by Vite)
+│   └── js/main.js        # Scripts (processed by Vite)  
+├── public/               # Static files (copied as-is)
+├── _layouts/             # Page templates
+│   └── base.liquid
+├── _components/          # Reusable parts
+│   └── header.liquid
+└── _data/                # Site data (JSON)
+    └── site.json
 ```
 
-## File Types
+## Creating Content
 
-All files support YAML frontmatter:
+All files support frontmatter:
 
 ```yaml
 ---
 title: "My Page"
-layout: "base"
 date: "2025-01-15"
+layout: "base"
 ---
+
+# Your content here
+
+Write in **Markdown** or use Liquid templates for dynamic content.
 ```
 
-**Supported Extensions:**
-
-- `.liquid` - Full templating features
-- `.html` - Basic templating
-- `.md` - Markdown with Liquid processing
-
-## Asset Handling
-
-**Processed by Vite** (optimized & hashed):
-
-- CSS files in `assets/css/`
-- JavaScript files in `assets/js/`
-
-**Static Assets** (copied as-is):
-
-- Images and other files
-
-**Template Usage:**
-
-```liquid
-<link rel="stylesheet" href="/assets/css/style.css">
-<script src="/assets/js/main.js"></script>
-<img src="/assets/images/logo.png" alt="Logo">
-```
-
-## Templating Examples
+## Templates with Liquid
 
 ```liquid
 <!-- Variables -->
-{{ page.title }}
-{{ data.site.name }}
+<h1>{{ page.title }}</h1>
+<p>Welcome to {{ data.site.name }}!</p>
 
 <!-- Includes -->
-{% include 'header.liquid' %}
-
-<!-- Conditionals -->
-{% if page.featured %}
-  <span class="featured">★</span>
-{% endif %}
+{% include 'header' %}
 
 <!-- Loops -->
-{% for post in collections.posts %}
-  <h2>{{ post.data.title }}</h2>
+{% for post in collections.blog %}
+  <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+  <time>{{ post.date | date: '%B %d, %Y' }}</time>
 {% endfor %}
+```
 
-<!-- Filters -->
-{{ page.date | date: '%B %d, %Y' }}
+## Configuration
+
+Create `flux.config.js` to customize Vite:
+
+```javascript
+export default {
+  plugins: [
+    // Add Vite plugins here
+  ]
+}
 ```
 
 ## Commands
 
 ```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run preview  # Preview production build
+npm run dev      # Start development server (http://localhost:3589)
+npm run build    # Build for production (_site/ folder)  
+npm run preview  # Preview production build (http://localhost:4589)
 ```
+
+## Deployment
+
+Build creates static files in `_site/` - deploy anywhere:
+
+- **Netlify** - Connect your repo, set build command to `npm run build`
+- **Vercel** - Auto-detects and deploys
+- **GitHub Pages** - Enable in repo settings  
+- **Cloudflare Pages** - Fast global CDN
+- **Your own server** - Just copy the `_site/` folder
 
 ## Requirements
 
-- Node.js 20.19+ or 22.12+
+- Node.js 18+
+- Your favorite package manager (npm, pnpm, yarn, bun)
 
-## Authoring Details
+## Learn More
 
-- Place pages under `src/` as `.liquid`, `.md`, or `.html`
-- Layouts live under `src/_layouts/`, components under `src/_components/`
-- Site data lives in `src/_data/**` and is available under the `data` scope (e.g., `_data/site.json` → `data.site`)
-- Assets under `src/assets/**` (CSS/JS are fingerprinted by Vite; others copied as-is)
-- Collections are derived from top-level folders under `src/` (excluding underscored folders and `assets`)
-- Per-page assets: declare `css`/`js` arrays in frontmatter and render them in the layout
+- [Installation Guide](https://flux.zetafield.com/installation)
+- [Quick Start Tutorial](https://flux.zetafield.com/quick-start)  
+- [Deploy Your Site](https://flux.zetafield.com/deploy)
 
-## Configuration
+## Contributing
 
-Create `flux.config.json` (or `.js/.ts`) at project root:
-
-```
-{
-  "srcDir": "src",
-  "outDir": "dist",
-  "cleanUrls": true
-}
-```
-
-- **cleanUrls**: dev/preview-only routing convenience. Build output mirrors source structure.
-- Production builds always emit `dist/404.html`
-
-## Clean URLs policy
-
-For v0.1 we use clean-only links in dev/preview (no redirect files generated):
-
-- If `cleanUrls: true`:
-  - `src/file.*` is served at `/file`
-  - `src/dir/index.*` is served at `/dir/`
-- Dev/preview redirect `.html` → clean URL. Build does not emit redirect files.
-- Build output respects source paths: `file.*` → `file.html`, `dir/index.*` → `dir/index.html`.
-
-## Developing the CLI
-
-Run the CLI from the workspace:
-
-```
-pnpm --filter @zetafield/flux dev
-```
-
-The example app in `my-site/` is linked to the workspace package.
-
-## Releasing
-
-This repo uses a pnpm monorepo with scoped packages `@zetafield/create-flux` and `@zetafield/flux`.
-
-- Versioning/publish via Changesets (setup pending)
-- Publish:
-
-```
-pnpm -r publish --access public
-```
+This is a small, passionate project built by developers who remember when making websites was fun. Found a bug? Have an idea? Check out our [GitHub Issues](https://github.com/zetafield/flux/issues) - we'd love to hear from you!
 
 ## License
 

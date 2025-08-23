@@ -260,28 +260,312 @@
     color: var(--color-clickable-hover);
   }
 
+  /* Site Header */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    width: 100%;
+    border-bottom: 1px solid rgb(229 231 235 / 0.8);
+    background-color: rgb(255 255 255 / 0.95);
+    backdrop-filter: blur(8px);
+  }
+
+  [data-theme="dark"] .site-header {
+    border-bottom-color: rgb(31 41 55 / 0.8);
+    background-color: rgb(17 24 39 / 0.95);
+  }
+
+  .header-container {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    height: 4rem;
+    max-width: 80rem;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .header-container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .header-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .header-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .header-logo {
+    height: 2rem;
+    width: 2rem;
+    color: var(--color-brand);
+  }
+
+  .header-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  .header-nav {
+    display: none;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .header-nav {
+      display: flex;
+    }
+  }
+
+  .header-nav-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-subtle);
+    text-decoration: none;
+    transition: color 0.2s;
+    &:hover {
+      color: var(--color-text);
+    }
+  }
+
+  .theme-toggle {
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    color: var(--color-text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .theme-toggle:hover {
+    background-color: var(--color-hover);
+    color: var(--color-text);
+  }
+
+  .theme-toggle-icon {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  .mobile-menu-button {
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    color: var(--color-text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-menu-button {
+      display: none;
+    }
+  }
+
+  .mobile-menu-button:hover {
+    background-color: var(--color-hover);
+    color: var(--color-text);
+  }
+
+  .mobile-menu-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  .mobile-menu {
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-page);
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-menu {
+      display: none !important;
+    }
+  }
+
+  .mobile-menu.show {
+    display: block;
+  }
+
+  .mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-subtle);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .mobile-nav-link:hover {
+    color: var(--color-text);
+  }
+
+  /* Main Layout */
+  .main-container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .main-container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .main-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .layout-wrapper {
+    display: flex;
+  }
+
+  .sidebar {
+    display: none;
+    width: 16rem;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .sidebar {
+      display: block;
+    }
+  }
+
+  .sidebar-content {
+    position: sticky;
+    top: 4rem;
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-right: 2rem;
+  }
+
+  .main-content {
+    min-width: 0;
+    flex: 1;
+  }
+
+  @media (min-width: 1024px) {
+    .main-content {
+      padding-left: 2rem;
+    }
+  }
+
+  .content-wrapper {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .page-description {
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+    color: var(--color-text-subtle);
+  }
+
+  .page-nav {
+    margin-top: 4rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 2rem;
+  }
+
+  .page-nav-content {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-nav-item {
+    flex: 1;
+  }
+
+  .page-nav-next {
+    text-align: right;
+  }
+
   /* Documentation navigation styles */
   .docs-nav {
-    @apply flex flex-col gap-6;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .docs-nav-section {
-    @apply space-y-2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   .docs-nav-title {
-    @apply text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
   }
 
   .docs-nav-list {
-    @apply space-y-1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 
-  .docs-nav-link {
-    @apply block rounded-md px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white;
-  }
-
-  .docs-nav-link.active {
-    @apply bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400;
+  .nav-link {
+    display: block;
+    color: var(--color-text-subtle);
+    text-decoration: none;
+    transition: all 0.2s;
+    &:hover {
+      background-color: var(--color-hover);
+      color: var(--color-text);
+    }
+    &.active {
+      color: var(--color-brand);
+      font-weight: 500;
+    }
   }
 }

@@ -1,40 +1,29 @@
 # @zetafield/create-flux
 
-Scaffold a new Flux static site.
+Interactive scaffolding tool for creating new Flux static sites.
 
 ## Usage
 
-With npm:
+```bash
+npm create @zetafield/flux
+# Follow the interactive prompts
 
-```
-npm create @zetafield/flux my-site
-```
-
-With pnpm:
-
-```
-pnpm create @zetafield/flux my-site
+# Or skip prompts with defaults
+npm create @zetafield/flux my-site -y
 ```
 
-With Yarn:
+Works with npm, pnpm, yarn, and bun.
 
-```
-yarn create @zetafield/flux my-site
-```
+## Documentation
 
-With Bun:
+For complete documentation, templates, and guides, visit:
 
-```
-bun create @zetafield/flux my-site
-```
+**📖 [https://flux.zetafield.com](https://flux.zetafield.com)**
 
-What you get
+## Repository
 
-- Minimal `src/` with Liquid layout, header, and sample pages
-- `_data/site.json`
-- `assets/css/style.css`
-- Package scripts: `flux dev`, `flux build`, `flux preview`
+**🐙 [GitHub Repository](https://github.com/zetafield/flux)**
 
-Options
+## License
 
-- `--yes` to skip the prompt and use defaults.
+MIT

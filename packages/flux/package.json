@@ -1,7 +1,7 @@
 {
 	"name": "@zetafield/flux",
 	"version": "0.0.0",
-	"description": "Flux - a minimal Vite-powered, LiquidJS-based, zero-JS static site generator.",
+	"description": "A minimalistic static site generator that makes building websites fun again. Perfect for learning web fundamentals.",
 	"type": "module",
 	"main": "src/plugin.mjs",
 	"bin": {
