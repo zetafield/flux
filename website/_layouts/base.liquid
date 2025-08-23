@@ -111,12 +111,12 @@
     <!-- Footer -->
     {% include 'footer' %}
 
-    <script src="/assets/js/theme-switcher.js"></script>
-    <script src="/assets/js/active-link.js"></script>
-    <script src="/assets/js/mobile-menu.js"></script>
+    <script type="module" src="/assets/js/theme-switcher.js"></script>
+    <script type="module" src="/assets/js/active-link.js"></script>
+    <script type="module" src="/assets/js/mobile-menu.js"></script>
     {% if page.js %}
       {% for src in page.js %}
-        <script src="{{ src }}"></script>
+        <script type="module" src="{{ src }}"></script>
       {% endfor %}
     {% endif %}
   </body>
