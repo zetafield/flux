@@ -14,7 +14,7 @@ Initial release of Flux static site generator
   - Development server with hot reloading
   - Clean URLs and draft support
 
-- **@zetafield/create-flux**: Interactive scaffolding tool  
+- **@zetafield/create-flux**: Interactive scaffolding tool
   - Package manager detection (npm, pnpm, yarn, bun)
   - Three template options (Empty, Minimal, Blog)
   - File-based template system
