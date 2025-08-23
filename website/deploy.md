@@ -2,85 +2,67 @@
 title: Deploy Your Site
 ---
 
-# Get Your Site Live!
-
-Ready to show your creation to the world? Deploying a Flux site is super easy because it builds to plain old static files that work anywhere!
+Deploy your Flux site to any platform that hosts static files.
 
 ## Build Your Site
 
-First, let's create the production version:
+Create the production build:
 
 ```bash
 npm run build
 ```
 
-This creates a `_site/` folder with all your optimized, ready-to-deploy files. That's it – your entire website in one neat folder!
+This generates a `_site/` folder containing your optimized website files.
 
-## Deployment Options
+## Deployment Platforms
 
-Since Flux generates static files, you can deploy pretty much anywhere. Here are the popular choices:
-
-### Netlify (Recommended for Beginners)
-
-Super simple! Just:
+### Netlify
 
 1. Push your code to GitHub/GitLab
-2. Connect your repo to Netlify
+2. Connect your repository to Netlify
 3. Set build command: `npm run build`
 4. Set publish directory: `_site`
-5. Deploy!
+5. Deploy
 
-Netlify handles everything – builds, deploys, even gives you a nice URL.
+Netlify handles builds and deployments automatically.
 
-### Vercel (Great for React Devs)
+### Vercel
 
-Similar to Netlify:
+1. Connect your GitHub repository
+2. Vercel detects the static site configuration
+3. Builds and deploys on each commit
 
-1. Connect your GitHub repo
-2. Vercel auto-detects it's a static site
-3. Builds and deploys automatically
-4. Boom! Live site.
+### Cloudflare Pages
 
-### Cloudflare Pages (Fast & Global)
-
-Lightning-fast global CDN:
-
-1. Connect your Git repo
+1. Connect your Git repository
 2. Build command: `npm run build`
 3. Output directory: `_site`
-4. Deploy worldwide instantly
+4. Deploy to global CDN
 
-### GitHub Pages (Free & Simple)
+### GitHub Pages
 
-Perfect if your code's already on GitHub:
-
-1. Enable GitHub Pages in your repo settings
-2. Set it to deploy from a branch
-3. Use GitHub Actions to build and deploy
+1. Enable GitHub Pages in repository settings
+2. Choose deployment source (branch or GitHub Actions)
+3. Configure build workflow if using GitHub Actions
 
 ### Your Own Server
 
-Got your own server? Just copy the `_site/` folder contents to your web root:
+Copy the `_site/` folder to your web server:
 
 ```bash
-# Build locally
 npm run build
-
-# Copy to your server (however you usually do it)
 rsync -av _site/ user@yourserver.com:/var/www/html/
 ```
 
 ## Automated Deployments
 
-Want automatic deployments when you push code? Most platforms support this out of the box:
+Most platforms deploy automatically when you push to your main branch.
 
-**For Git-based deployments**, just push to your main branch and watch the magic happen!
-
-**For manual deployments**, you can set up GitHub Actions:
+For custom deployment workflows, use GitHub Actions:
 
 ```yaml
 # .github/workflows/deploy.yml
-name: Deploy to Production
+name: Deploy Site
 on:
   push:
     branches: [main]
@@ -94,41 +76,34 @@ jobs:
           node-version: "18"
       - run: npm install
       - run: npm run build
-      - name: Deploy to your server
-        # Add your deployment steps here
+      # Add deployment steps
 ```
 
 ## Custom Domains
 
-Most platforms make custom domains super easy:
-
-1. Add your domain in the platform's settings
-2. Update your DNS to point to their servers
+1. Configure custom domain in platform settings
+2. Update DNS records to point to hosting provider
 3. Enable HTTPS (usually automatic)
-4. You're live!
 
-## Tips for a Smooth Deploy
+## Testing Before Deployment
 
-**Check your links**: Make sure all internal links use relative paths or start with `/`
+Test your production build locally:
 
-**Test locally first**: Run `npm run build && npm run preview` to test your production build
+```bash
+npm run build
+npm run preview
+```
 
-**Mind your assets**: Images and files in `public/` get copied as-is, while `assets/` get processed and hashed
-
-**Environment matters**: Some features might work differently in production vs development
+This serves your built site locally to catch issues before deployment.
 
 ## Troubleshooting
 
-**Site looks broken?** Check your asset paths – they might be different in production.
+**Broken assets**: Check that asset paths are correct and files exist in the build output.
 
-**404 errors?** Make sure your hosting platform is configured for Single Page Applications if needed.
+**404 errors**: Verify routing configuration and that all pages are properly built.
 
-**Build fails?** Check that all your dependencies are listed in `package.json`, not just installed locally.
+**Build failures**: Ensure all dependencies are in `package.json` and the build runs locally.
 
-## That's It!
+## Summary
 
-Deploying with Flux is intentionally simple. Build once, deploy anywhere – that's the beauty of static sites!
-
-Need help with a specific platform? The docs for Netlify, Vercel, and others are fantastic and usually have step-by-step guides for static sites.
-
-Now go forth and ship!
+Flux generates static files that deploy anywhere. Choose a platform, configure the build settings, and deploy your site.

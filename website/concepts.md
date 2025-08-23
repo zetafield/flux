@@ -2,31 +2,65 @@
 title: Core Concepts
 ---
 
-# How Flux Thinks
+Understanding how Flux works will help you build sites efficiently.
 
-Let's dive into the core ideas that make Flux tick. Don't worry – it's simpler than you might think!
+## File-Based Routing
 
-## Content is King
+Flux creates pages from your file structure. Add a `.md` or `.html` file anywhere in your project and it becomes a page with a corresponding URL.
 
-In Flux, everything starts with content. Drop a `.md` or `.html` file anywhere in your project, and boom – you've got a page! No routing configs, no complex setups. Just write and go.
+### How URLs Are Generated
 
-## Templates Make Things Pretty
+The file path determines the URL:
 
-Templates are where you define how your pages look. We use [Liquid](https://liquidjs.com/) – the same templating language that powers Shopify, Jekyll, and tons of other sites.
+- `index.md` → `/`
+- `about.md` → `/about`
+- `blog/index.md` → `/blog/`
+- `blog/my-post.md` → `/blog/my-post`
+- `projects/web-app.md` → `/projects/web-app`
 
-Templates live in special folders:
+### Index Files
 
-- `_layouts/` – Page layouts (like your main page wrapper)
-- `_components/` – Reusable chunks of HTML
-- `_includes/` – Another name for components (use whichever you prefer!)
+Files named `index.md` or `index.html` become the default page for that directory:
 
-Your content gets injected into templates using `{{ content }}`. Magic!
+```
+blog/
+├── index.md        # /blog/
+├── first-post.md   # /blog/first-post
+└── second-post.md  # /blog/second-post
+```
 
-### Layout Inheritance
+### Nested Directories
 
-Want to get fancy? You can have layouts that extend other layouts:
+Create nested URLs by organizing files in folders:
 
-**Base layout** (`_layouts/base.liquid`):
+```
+docs/
+├── index.md           # /docs/
+├── getting-started.md # /docs/getting-started
+└── advanced/
+    ├── index.md       # /docs/advanced/
+    └── config.md      # /docs/advanced/config
+```
+
+No routing configuration needed - the file structure is the routing.
+
+## Templates and Layouts
+
+Templates define how your pages look using [Liquid](https://liquidjs.com/) templating language.
+
+Template directories:
+
+- `_layouts/` - Page layouts and wrappers
+- `_components/` - Reusable Liquid components
+- `_includes/` - Same as components, just a different name - use whichever you prefer
+
+Content from your pages is inserted into layouts using `{{ content }}`.
+
+### Simple Layouts
+
+For basic layouts, use `{{ content }}` to insert page content:
+
+**Simple layout** (`_layouts/page.liquid`):
 
 ```liquid
 <!doctype html>
@@ -35,8 +69,27 @@ Want to get fancy? You can have layouts that extend other layouts:
     <title>{{ page.title }}</title>
   </head>
   <body>
-    {% block content -%}
-    {%- endblock %}
+    <main>
+      {{ content }}
+    </main>
+  </body>
+</html>
+```
+
+### Layout Inheritance
+
+For more complex setups, layouts can extend other layouts using blocks:
+
+**Base layout** (`_layouts/base.liquid`):
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <title>{{ page.title }}</title>
+  </head>
+  <body>
+    {% block content %}{% endblock %}
   </body>
 </html>
 ```
@@ -55,34 +108,54 @@ Want to get fancy? You can have layouts that extend other layouts:
 {% endblock %}
 ```
 
-Then just set `layout: post` in your frontmatter!
+Use by setting `layout: post` in frontmatter.
 
-## Data Powers Everything
+## Template Variables
 
-Flux gives you two ways to work with data:
+Flux provides three global template variables:
 
-### 1. Global Data (`data` variable)
+### The `data` Variable
 
-Drop JSON files in `_data/` and they become globally available:
+JSON files in `_data/` become accessible through the `data` variable:
 
 **`_data/site.json`**:
 
 ```json
 {
-  "title": "My Awesome Site",
-  "description": "Where awesome happens daily"
+  "title": "My Site",
+  "description": "Site description"
 }
 ```
 
-Use it anywhere: `{{ data.site.title }}`
+Access with: `{{ data.site.title }}`
 
-### 2. Collections (`collections` variable)
+### The `page` Variable
 
-Flux automatically organizes your content into collections based on folder structure:
+Current page metadata from frontmatter and file properties:
+
+- `{{ page.title }}` - Page title from frontmatter
+- `{{ page.date }}` - Page date
+- `{{ page.url }}` - Page URL
+
+Example frontmatter:
+
+```yaml
+---
+title: My Blog Post
+date: 2024-01-15
+author: Jane Doe
+---
+```
+
+Access custom frontmatter: `{{ page.author }}`
+
+### The `collections` Variable
+
+Content is automatically organized by folder structure and accessible through the `collections` variable:
 
 ```
 .
-├── index.md          # collections.root
+├── index.md           # collections.root
 ├── about.md           # collections.root
 ├── blog/
 │   ├── post-1.md      # collections.blog
@@ -92,7 +165,7 @@ Flux automatically organizes your content into collections based on folder struc
     └── project-b.md   # collections.projects
 ```
 
-Want to list all blog posts? Easy:
+List blog posts:
 
 ```liquid
 {% for post in collections.blog %}
@@ -102,31 +175,31 @@ Want to list all blog posts? Easy:
 {% endfor %}
 ```
 
-## Assets: The Two-Folder System
+## Assets Management
 
-Flux handles assets in two different ways:
+Two folder system for different needs:
 
-### `public/` - Copy As-Is
+### `public/` - Direct Copy
 
-Files here get copied directly to your site without any processing:
+Files copied without processing:
 
 - `public/robots.txt` → `_site/robots.txt`
 - `public/favicon.ico` → `_site/favicon.ico`
 
-Perfect for files that need to keep their exact names.
+Use for files that need exact names.
 
-### `assets/` - Process & Optimize
+### `assets/` - Processed by Vite
 
-Files here get the full Vite treatment – compilation, optimization, and hashing:
+Files are compiled, optimized, and hashed:
 
 - `assets/css/main.css` → `_site/assets/css/main-abc123.css`
 - `assets/js/app.js` → `_site/assets/js/app-def456.js`
 
-Vite automatically handles imports, so your CSS can reference images, your JS can import modules, etc.
+Vite handles imports and dependencies automatically.
 
-## Configuration (When You Need It)
+## Configuration
 
-Most of the time, Flux just works. But when you need to add Vite plugins (like Tailwind CSS), create a config file:
+Optional configuration when needed:
 
 **`flux.config.js`**:
 
@@ -138,38 +211,34 @@ export default {
 };
 ```
 
-We keep the config minimal on purpose – less configuration means more time building cool stuff!
+Minimal configuration keeps setup simple.
 
-## The Build Process
+## Build Process
 
-When you run `npm run build`, here's what happens:
+Running `npm run build`:
 
-1. **Content Processing**: Flux renders all your `.md` and `.html` files with their templates
-2. **Asset Optimization**: Vite processes, optimizes, and hashes your assets
-3. **Static Output**: Everything gets compiled into `_site/` as pure static files
+1. **Content Processing** - Renders `.md` and `.html` files with templates
+2. **Asset Optimization** - Vite processes and optimizes assets
+3. **Static Output** - Compiles everything to `_site/`
 
-The result? A lightning-fast static site that you can deploy anywhere!
+Results in a static site ready for deployment.
 
 ## Development vs Production
 
 **Development** (`npm run dev`):
 
-- Live reloading when you change files
-- Draft posts are visible (files starting with `_`)
-- Assets are served fresh (no caching)
+- Live reloading on file changes
+- Draft posts visible (files starting with `_`)
+- Fresh assets served
 
 **Production** (`npm run build`):
 
-- Optimized, minified assets
-- Draft posts are excluded
-- Everything's ready for deployment
+- Optimized and minified assets
+- Draft posts excluded
+- Deployment-ready output
 
-## That's the Gist!
+Next steps:
 
-Flux follows a simple philosophy: **content first, minimal configuration, maximum flexibility**. You write, Flux handles the rest.
-
-Ready to put this knowledge to work?
-
-- Try the [Quick Start](/quick-start) guide
-- Learn about [deploying your site](/deploy)
-- Or just start building – the best way to learn is by doing!
+- [Quick Start](/quick-start) guide
+- [Deployment](/deploy) options
+- Start building your first site

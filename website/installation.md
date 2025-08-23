@@ -2,90 +2,66 @@
 title: Installation
 ---
 
-# Getting Flux Up and Running
+Create a new Flux project using the scaffold tool or set up manually.
 
-Installing Flux is super straightforward – we've got you covered no matter which package manager you prefer!
+## Using the Scaffold Tool
 
-## Interactive Setup
-
-The fastest way to get started is with our scaffolding tool. Just run one command and Flux will walk you through everything:
+Create a new project with the interactive setup:
 
 ```bash
-# npm
 npm create @zetafield/flux
+```
 
-# pnpm (our personal favorite!)
+Or with other package managers:
+
+```bash
+# pnpm
 pnpm create @zetafield/flux
 
 # yarn
 yarn create @zetafield/flux
 
-# bun (for the speed demons)
-bunx create-@zetafield/flux
+# bun
+bun create @zetafield/flux
 ```
 
-Flux will ask you a few quick questions:
+You'll be prompted for:
 
-1. **Project name:** What should we call your site? (e.g., "My Awesome Blog")
-2. **Project directory:** Where should we create it? (auto-suggested based on your project name)
-3. **Description:** A brief description for your site (optional)
-4. **Template:** Choose your starting point:
-   - **Empty** - Only package.json, build from scratch
-   - **Minimal** - Homepage with basic layout (recommended)
-   - **Blog** - Ready for blogging with post layouts
+- Project name
+- Directory location
+- Optional description
+- Template choice (Empty, Minimal, or Blog)
 
-That's it! Flux creates everything and you're ready to start building.
-
-## Skip the Questions
-
-Want to get started even faster? Use the `--yes` flag to skip prompts and use sensible defaults:
+To skip prompts and use defaults:
 
 ```bash
-npm create @zetafield/flux my-site --yes
+npm create @zetafield/flux --yes
 ```
 
-This creates a "Minimal" template with default settings.
+## Templates
 
-## Template Options
+- **Empty** - Package.json only, build from scratch
+- **Minimal** - Basic homepage and layout (default)
+- **Blog** - Complete blog with posts and layouts
 
-We've got three templates to get you started:
+## Manual Setup
 
-**Empty** – Only package.json file. Perfect if you want to build everything from scratch.
+To set up manually:
 
-**Minimal** – A simple site with homepage, about page, and basic styling. Great starting point!
+1. Create a new directory
+2. Initialize `package.json`
+3. Install Flux as a dependency `@zetafield/flux`
+4. Configure build scripts
 
-**Blog** – A full-featured blog setup with posts, layouts, and enhanced styling. Ready to write!
+## Requirements
 
-## What You Get
-
-After installation, you'll have:
-
-- A complete Flux project structure
-- All dependencies installed
-- Ready-to-run dev server
-- Build and preview commands set up
-
-## System Requirements
-
-Flux needs:
-
-- **Node.js** 18 or higher
-- Your favorite package manager (npm, pnpm, yarn, or bun)
-
-That's it! No complex build tools to configure or dependencies to wrestle with.
+- Node.js 18 or higher
+- Package manager (npm, pnpm, yarn, or bun)
 
 ## Next Steps
 
-After the setup completes, you'll see instructions to:
+1. Navigate to your project directory
+2. Install dependencies
+3. Run `npm run dev` to start development
 
-1. **Enter your project directory**: `cd your-project-name`
-2. **Install dependencies**: Flux detects your package manager and shows the right command
-3. **Start developing**: `npm run dev` (or your package manager equivalent)
-
-Then:
-
-4. **Make some changes** and watch them update live
-5. **Check out** [Quick Start](/quick-start) for a guided tour
-6. **Learn the fundamentals** in [Core Concepts](/concepts)
-
-Ready to build something awesome? Let's go!
+See [Quick Start](/quick-start) for more details.

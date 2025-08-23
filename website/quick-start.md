@@ -2,89 +2,85 @@
 title: Quick Start
 ---
 
-# Let's Build a Blog in Under 5 Minutes!
-
-Ready to get your hands dirty? Let's build a beautiful blog super quickly and get you familiar with how Flux works. No fluff, just the good stuff!
+This guide will walk you through creating a blog with Flux. You'll have a working site up and running in just a few minutes.
 
 ## Create Your New Project
 
-First things first – let's create a shiny new Flux project using our interactive setup:
+Create a new Flux project using the interactive scaffolding tool:
 
 ```bash
-# Use your favorite package manager – we'll go with npm for this example
 npm create @zetafield/flux
 ```
 
-Flux will ask you a few quick questions. For this tutorial, choose:
-- **Project name:** "My Awesome Blog" 
+Flux will ask you a few questions to set up your project. For this tutorial, choose:
+
+- **Project name:** "My Awesome Blog"
 - **Directory:** Accept the suggested `./my-awesome-blog`
-- **Description:** Something fun like "My personal blog built with Flux"
+- **Description:** "My personal blog built with Flux"
 - **Template:** Select **"Blog - Ready for blogging with post layouts"**
 
-Now hop into your new project:
+Navigate to your new project:
 
 ```bash
 cd my-awesome-blog
 ```
 
-Flux automatically installs dependencies, but if you need to install them manually:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Fire up the dev server and watch the magic happen:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Boom! Head over to `http://localhost:3589` in your browser and you'll see your brand new blog come to life!
+Open `http://localhost:3589` in your browser to see your new blog.
 
-_TODO: add a screenshot here_
+## Project Structure
 
-## What's All This Stuff?
-
-Your project structure looks something like this:
+Your project structure looks like this:
 
 ```
 .
-├── index.md               # Your homepage
-├── about.md              # About page (because everyone needs one!)
+├── index.md              # Homepage
+├── about.md              # About page
 ├── blog.md               # Blog listing page
-├── blog/                 # Where your posts live
-│   ├── 2025-08-15-welcome.md       # Your first post
-│   └── 2025-08-20-demo-page.md     # A demo with all the markdown goodies
-├── assets/
-│   ├── css/              # Your stylesheets (Vite will process these)
+├── blog/                 # Blog posts directory
+│   ├── 2025-08-15-welcome.md       # First post
+│   └── 2025-08-20-demo-page.md     # Demo post with formatting examples
+├── assets/               # Processed by Vite
+│   ├── css/              # Stylesheets
 │   ├── js/               # JavaScript files
-│   └── images/           # All your pretty pictures
+│   └── images/           # Image files
 ├── public/               # Static files (copied as-is)
-├── _layouts/             # Your page templates
-│   ├── base.liquid       # The main layout wrapper
-│   └── post.liquid       # Special layout for blog posts
+├── _layouts/             # Page templates
+│   ├── base.liquid       # Main layout template
+│   └── post.liquid       # Blog post layout
 ├── _data/                # Global site data
-│   ├── site.json         # Site settings
+│   ├── site.json         # Site configuration
 │   └── nav.json          # Navigation structure
 └── package.json
 ```
 
 ## How Content Works
 
-Here's the cool part – any `.html` or `.md` file in your project becomes a page on your site! Flux automatically figures out the URLs:
+Any `.html` or `.md` file in your project becomes a page on your site. Flux automatically generates URLs based on file paths:
 
 ```
 .
 ├── index.md                      # → https://yoursite.com
-├── about.md                      # → https://yoursite.com/about
-├── blog.md                       # → https://yoursite.com/blog
+├── about.md                      # → https://yoursite.com/about.html
+├── blog.md                       # → https://yoursite.com/blog.html
 ├── blog/
 │   ├── _my-draft-post.md         # Draft (starts with "_")
-│   ├── 2025-08-15-first-post.md  # → https://yoursite.com/blog/first-post
-│   └── 2025-08-16-another.md     # → https://yoursite.com/blog/another
+│   ├── 2025-08-15-first-post.md  # → https://yoursite.com/blog/first-post.html
+│   └── 2025-08-16-another.md     # → https://yoursite.com/blog/another.html
 ```
 
-Each page has two parts – let's look at your `about.md`:
+Each page has two parts. Here's an example `about.md` file:
 
 ```markdown
 ---
@@ -98,21 +94,21 @@ Welcome! This is our about page.
 We're pretty awesome.
 ```
 
-The stuff between the `---` lines is called **frontmatter** – it's like metadata for your page. The rest is just regular markdown content.
+The content between the `---` lines is called **frontmatter** and contains metadata for your page. The rest is regular markdown content.
 
-### Layout Magic
+### Layouts
 
-By default, every page uses the `_layouts/base.liquid` template. Want a different layout? Just add `layout: custom.liquid` to your frontmatter. Want no layout at all? Use `layout: false`.
+By default, every page uses the `_layouts/base.liquid` template. To use a different layout, add `layout: custom.liquid` to your frontmatter. To disable layouts completely, use `layout: false`.
 
-### Dates Are Smart
+### Dates
 
-Flux is clever about dates! If your filename starts with "YYYY-MM-DD" (like `2025-08-15-my-post.md`), it automatically extracts the date and makes it available as `page.date`. Super handy for organizing posts chronologically!
+Flux automatically handles dates in filenames. If your filename starts with "YYYY-MM-DD" (like `2025-08-15-my-post.md`), it extracts the date and makes it available as `page.date`. This is useful for organizing blog posts chronologically.
 
-You can also set the date manually in frontmatter – it'll override the filename date.
+You can also set the date manually in frontmatter, which will override the filename date.
 
-### Draft Mode
+### Draft Posts
 
-Got a post you're still working on? Just start the filename with an underscore (`_my-draft.md`) and Flux treats it as a draft. Drafts don't show up in builds, but you can see them in development by running:
+To create a draft post, start the filename with an underscore (`_my-draft.md`). Draft posts don't appear in builds, but you can view them during development by running:
 
 ```bash
 npm run dev --draft
@@ -120,10 +116,9 @@ npm run dev --draft
 
 ## Next Steps
 
-Want to dive deeper? Check out:
+To learn more about Flux, check out:
 
-- [Core Concepts](/concepts) – Learn how everything fits together
 - [Installation](/installation) – More installation options and setup details
-- [Deploy Your Site](/deploy) – Get your blog live on the internet!
+- [Deploy Your Site](/deploy) – Get your blog live on the internet
 
-Happy blogging!
+You now have a working blog with Flux. Start writing content and customizing your site!
