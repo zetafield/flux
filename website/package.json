@@ -13,5 +13,8 @@
 		"@zetafield/flux": "workspace:*",
 		"tailwindcss": "^4.1.11",
 		"vite": "^7.0.0"
+	},
+	"dependencies": {
+		"modern-normalize": "^3.0.1"
 	}
 }

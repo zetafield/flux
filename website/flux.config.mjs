@@ -1,5 +1,7 @@
-import tailwind from "@tailwindcss/vite";
-
 export default {
-  plugins: [tailwind()],
+  markdown: {
+    highlight: true,
+    themeLight: "light-plus",
+    themeDark: "tokyo-night",
+  },
 };
