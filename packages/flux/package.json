@@ -13,7 +13,12 @@
 			"types": "./src/types.d.ts"
 		}
 	},
-	"files": ["bin", "src", "README.md", "LICENSE"],
+	"files": [
+		"bin",
+		"src",
+		"README.md",
+		"LICENSE"
+	],
 	"publishConfig": {
 		"access": "public"
 	},
@@ -21,7 +26,12 @@
 		"node": ">=20.19"
 	},
 	"license": "MIT",
-	"keywords": ["ssg", "vite", "liquid", "static-site"],
+	"keywords": [
+		"ssg",
+		"vite",
+		"liquid",
+		"static-site"
+	],
 	"scripts": {
 		"build": "echo \"package build: nothing to compile\"",
 		"dev": "node ./bin/flux.mjs dev",
@@ -35,6 +45,7 @@
 		"gray-matter": "^4.0.3",
 		"liquidjs": "^10.13.0",
 		"marked": "^12.0.2",
+		"shiki": "^1.22.2",
 		"prettier": "^3.3.3",
 		"picocolors": "^1.0.0",
 		"polka": "^0.5.2",

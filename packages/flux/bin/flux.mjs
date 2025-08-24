@@ -31,7 +31,7 @@ async function loadUserConfig() {
 }
 
 function validateConfig(config, configPath) {
-  const allowedKeys = ["plugins"];
+  const allowedKeys = ["plugins", "markdown"];
 
   const validConfig = {};
   const warnings = [];

@@ -1,22 +1,44 @@
 import fse from "fs-extra";
 import path from "node:path";
 import pc from "picocolors";
-import { renderContent } from "./renderer.mjs";
+import { renderContent, resetHighlighter } from "./renderer.mjs";
 
 export function createDevPlugin() {
   const projectRoot = process.cwd();
+  let userConfig = null;
 
   return {
     name: "flux-dev",
 
     // Only handle dev server routing - no build logic!
-    configureServer(server) {
+    async configureServer(server) {
+      // Load config once when dev server starts
+      userConfig = await (async () => {
+        const configPaths = [
+          path.resolve(projectRoot, "flux.config.mjs"),
+          path.resolve(projectRoot, "flux.config.js"),
+        ];
+        for (const p of configPaths) {
+          try {
+            if (await fse.pathExists(p)) {
+              const mod = await import(`file://${p}`);
+              return mod?.default || mod || {};
+            }
+          } catch (error) {
+            console.warn(`Failed to load config ${p}:`, error);
+          }
+        }
+        return {};
+      })();
+
       server.middlewares.use(async (req, res, next) => {
         if (req.method !== "GET") return next();
 
         const url = new URL(req.url, "http://localhost").pathname;
 
-        // Skip assets and files with extensions
+        // Shiki generates inline styles with CSS variables - no external CSS serving needed
+
+        // Skip other assets and files with extensions
         if (/\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2)$/.test(url)) {
           return next();
         }
@@ -44,6 +66,7 @@ export function createDevPlugin() {
           const html = await renderContent(
             path.resolve(projectRoot, file),
             projectRoot,
+            userConfig,
           );
 
           // Ensure Vite injects HMR client and transforms HTML
@@ -57,12 +80,43 @@ export function createDevPlugin() {
     },
 
     // Hot reload for content changes
-    handleHotUpdate({ file, server }) {
+    async handleHotUpdate({ file, server }) {
       const relativePath = path.relative(projectRoot, file);
 
       // For CSS files under assets/, trigger a full reload (static links)
       if (/\.css$/.test(file) && file.includes("assets/")) {
         console.log(pc.cyan(`• CSS changed: ${relativePath}`));
+        server.ws.send({ type: "full-reload" });
+        return [];
+      }
+
+      // For config changes, reload config and trigger full page reload
+      if (/flux\.config\.(mjs|js)$/.test(file)) {
+        console.log(pc.magenta(`• Config changed: ${relativePath}`));
+
+        // Reset Shiki highlighter so it re-initializes with new themes
+        resetHighlighter();
+
+        // Reload user config
+        userConfig = await (async () => {
+          const configPaths = [
+            path.resolve(projectRoot, "flux.config.mjs"),
+            path.resolve(projectRoot, "flux.config.js"),
+          ];
+          for (const p of configPaths) {
+            try {
+              if (await fse.pathExists(p)) {
+                // Use timestamp to bypass ES module cache
+                const cacheBuster = `?t=${Date.now()}`;
+                const mod = await import(`file://${p}${cacheBuster}`);
+                return mod?.default || mod || {};
+              }
+            } catch (error) {
+              console.warn(`Failed to load config ${p}:`, error);
+            }
+          }
+          return {};
+        })();
         server.ws.send({ type: "full-reload" });
         return [];
       }

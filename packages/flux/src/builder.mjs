@@ -13,12 +13,16 @@ export class FluxBuilder {
     this.tempRoot = path.resolve(this.projectRoot, "_temp");
     this.outDir = path.resolve(this.projectRoot, "_site");
     this.publicDir = path.resolve(this.projectRoot, "public");
+    this.userConfig = null;
   }
 
   async build() {
     console.log(pc.blue("* Building with Flux..."));
 
     try {
+      // Load user config once
+      this.userConfig = await this.loadUserConfig();
+
       // Phase 1: Pre-process content
       console.log(pc.cyan("• Processing content files..."));
       await this.preprocessContent();
@@ -52,6 +56,8 @@ export class FluxBuilder {
       await fse.copy(assetsPath, path.resolve(this.tempRoot, "assets"));
     }
 
+    // Shiki generates inline styles with CSS variables - no external CSS needed
+
     // Find and process content files
     const files = await fg(["**/*.{md,html}"], {
       cwd: this.projectRoot,
@@ -72,6 +78,7 @@ export class FluxBuilder {
       const html = await renderContent(
         path.resolve(this.projectRoot, file),
         this.projectRoot,
+        this.userConfig,
       );
 
       await fs.writeFile(tempFile, html, "utf8");
@@ -82,8 +89,8 @@ export class FluxBuilder {
   }
 
   async runViteBuild() {
-    // Load user's Vite config
-    const userConfig = await this.loadUserConfig();
+    // Use already-loaded user config (fallback to loading if needed)
+    const userConfig = this.userConfig || (await this.loadUserConfig());
 
     // Find all HTML files in temp for Vite input
     const htmlFiles = await fg(["**/*.html"], {
@@ -151,7 +158,7 @@ export class FluxBuilder {
   }
 
   validateConfig(config, configPath) {
-    const allowedKeys = ["plugins"];
+    const allowedKeys = ["plugins", "markdown"];
 
     const validConfig = {};
     const warnings = [];
