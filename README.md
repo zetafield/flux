@@ -1,91 +1,97 @@
 # Flux - A Minimalistic Static Site Generator
 
-Flux is built for folks who want to learn web fundamentals the fun way—by keeping things simple and straightforward.
+Flux is a minimalistic static site generator for building websites with modern tooling.
 
-We're big fans of vanilla HTML, CSS, and JavaScript here. Start with just one `.html` page—that's it! Once you've got that down, throw in some CSS to make it look amazing. Want to add some interactivity? Sprinkle in a bit of JavaScript and watch your page come to life. It's pretty cool!
+Build sites using HTML, CSS, and JavaScript. Start with a single HTML file, add CSS for styling, and include JavaScript for interactivity. Flux handles the build process while you focus on creating.
 
-Planning to build a blog or portfolio? Flux makes it easy to set up common layouts for all your pages, and you can write your content in Markdown (because who doesn't love Markdown?). This way, you'll gradually pick up all the essential web development skills. There's something really satisfying about seeing your handcrafted code turn into a real website.
+For blogs and portfolios, create reusable layouts and write content in Markdown. This approach helps you learn web development fundamentals while building real websites.
 
-Now, if you're thinking about adding React or Vue to the mix, pause for a second—do you actually need them? Sometimes vanilla JavaScript can handle what you're after. But hey, if you do need something more powerful, there are great options out there like Astro.
+Flux encourages vanilla JavaScript over complex frameworks. If you need more advanced features, consider tools like [Astro](https://astro.build/).
 
-Behind the scenes, we use Vite to make sure everything runs smoothly from development to deployment.
+Flux is built on [Vite](http://vite.dev) for fast development and optimized builds.
 
-The best part? Everything outputs as static files, so you can deploy pretty much anywhere—GitHub Pages, Netlify, Vercel, Cloudflare Pages, AWS S3, you name it!
+Output is static files that deploy anywhere - GitHub Pages, Netlify, Vercel, Cloudflare Pages, AWS S3, or any VPS.
 
-## Quick Start
+## Getting Started
+
+Create a new Flux project using the interactive setup:
 
 ```bash
 npm create @zetafield/flux
-# Follow the interactive prompts
+```
+
+Navigate to your project and start development:
+
+```bash
 cd your-project-name
+npm install
 npm run dev
 ```
 
-Visit `http://localhost:3589` and start building!
+Visit `http://localhost:3589` and start building.
 
-## What You Get
+## Features
 
-- **Live reloading** during development
-- **Markdown support** for easy writing  
-- **Liquid templates** for consistent designs
-- **Optimized builds** for production
-- **Deploy anywhere** - just static files
+- Live reloading during development
+- Markdown support for content
+- Liquid templates for layouts
+- Optimized builds for production  
+- Deploy anywhere - static files only
 
-## Template Starters
+## Templates
 
 Choose your starting point during setup:
 
-- **Empty** - Only package.json, build from scratch
-- **Minimal** - Homepage with basic layout (recommended)
-- **Blog** - Ready for blogging with posts and layouts
+- **Empty** - Package.json only, build from scratch
+- **Minimal** - Basic homepage and layout (default)
+- **Blog** - Complete blog with posts and layouts
 
 ## Project Structure
 
 ```
-my-blog/
-├── index.md              # Your homepage
-├── about.md              # Pages (Markdown or HTML)
-├── blog/                 # Organize content in folders
+.
+├── index.md              # Homepage
+├── about.md              # About page
+├── blog/                 # Blog posts directory
 │   └── first-post.md
-├── assets/
-│   ├── css/main.css      # Styles (processed by Vite)
-│   └── js/main.js        # Scripts (processed by Vite)  
+├── assets/               # Processed by Vite
+│   ├── css/              # Stylesheets
+│   ├── js/               # JavaScript files
+│   └── images/           # Image files
 ├── public/               # Static files (copied as-is)
 ├── _layouts/             # Page templates
 │   └── base.liquid
-├── _components/          # Reusable parts
-│   └── header.liquid
-└── _data/                # Site data (JSON)
-    └── site.json
+├── _data/                # Global site data
+│   └── site.json
+└── package.json
 ```
 
-## Creating Content
+## How Content Works
 
-All files support frontmatter:
+Any `.html` or `.md` file becomes a page. Each page has frontmatter for metadata:
 
-```yaml
+```markdown
 ---
-title: "My Page"
-date: "2025-01-15"
-layout: "base"
+title: About
 ---
 
-# Your content here
+Welcome! This is our about page.
 
-Write in **Markdown** or use Liquid templates for dynamic content.
+## Our Team
+
+We're pretty awesome.
 ```
 
-## Templates with Liquid
+The content between `---` lines is frontmatter. The rest is regular markdown content.
+
+## Templates
+
+Templates use [Liquid](https://liquidjs.com/) for dynamic content:
 
 ```liquid
-<!-- Variables -->
 <h1>{{ page.title }}</h1>
 <p>Welcome to {{ data.site.name }}!</p>
 
-<!-- Includes -->
-{% include 'header' %}
-
-<!-- Loops -->
 {% for post in collections.blog %}
   <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
   <time>{{ post.date | date: '%B %d, %Y' }}</time>
@@ -94,14 +100,15 @@ Write in **Markdown** or use Liquid templates for dynamic content.
 
 ## Configuration
 
-Create `flux.config.js` to customize Vite:
+Optional configuration when needed:
 
 ```javascript
+// flux.config.js
+import tailwind from "@tailwindcss/vite";
+
 export default {
-  plugins: [
-    // Add Vite plugins here
-  ]
-}
+  plugins: [tailwind()],
+};
 ```
 
 ## Commands
@@ -117,25 +124,26 @@ npm run preview  # Preview production build (http://localhost:4589)
 Build creates static files in `_site/` - deploy anywhere:
 
 - **Netlify** - Connect your repo, set build command to `npm run build`
-- **Vercel** - Auto-detects and deploys
-- **GitHub Pages** - Enable in repo settings  
+- **Vercel** - Auto-detects and deploys  
 - **Cloudflare Pages** - Fast global CDN
-- **Your own server** - Just copy the `_site/` folder
+- **GitHub Pages** - Enable in repo settings
+- **Your own server** - Copy the `_site/` folder
 
 ## Requirements
 
-- Node.js 18+
-- Your favorite package manager (npm, pnpm, yarn, bun)
+- Node.js 18 or higher
+- Package manager (npm, pnpm, yarn, or bun)
 
-## Learn More
+## Documentation
 
-- [Installation Guide](https://flux.zetafield.com/installation)
-- [Quick Start Tutorial](https://flux.zetafield.com/quick-start)  
+- [Installation](https://flux.zetafield.com/installation)
+- [Quick Start](https://flux.zetafield.com/quick-start)  
+- [Core Concepts](https://flux.zetafield.com/concepts)
 - [Deploy Your Site](https://flux.zetafield.com/deploy)
 
 ## Contributing
 
-This is a small, passionate project built by developers who remember when making websites was fun. Found a bug? Have an idea? Check out our [GitHub Issues](https://github.com/zetafield/flux/issues) - we'd love to hear from you!
+Found a bug or have an idea? Check out our [GitHub Issues](https://github.com/zetafield/flux/issues).
 
 ## License
 
