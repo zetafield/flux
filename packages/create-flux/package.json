@@ -1,12 +1,17 @@
 {
 	"name": "@zetafield/create-flux",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "Interactive scaffolding tool for creating new Flux static sites. Choose from templates and get started in seconds.",
 	"type": "module",
 	"bin": {
 		"create-flux": "bin/create-flux.mjs"
 	},
-	"files": ["bin", "templates", "README.md", "LICENSE"],
+	"files": [
+		"bin",
+		"templates",
+		"README.md",
+		"LICENSE"
+	],
 	"publishConfig": {
 		"access": "public"
 	},
