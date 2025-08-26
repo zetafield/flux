@@ -8,6 +8,7 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
+  id-token: write
   contents: write
   pull-requests: write
 
@@ -57,6 +58,7 @@ jobs:
           publish: pnpm changeset publish
           title: "Release new versions"
           commit: "Release new versions"
+          setupGitUser: true
+          createGithubReleases: true
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
