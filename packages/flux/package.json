@@ -1,6 +1,6 @@
 {
 	"name": "@zetafield/flux",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "A minimalistic static site generator that makes building websites fun again. Perfect for learning web fundamentals.",
 	"type": "module",
 	"main": "src/plugin.mjs",
