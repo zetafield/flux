@@ -2,6 +2,9 @@ import matter from "gray-matter";
 import { marked, Marked } from "marked";
 import { createHighlighter } from "shiki";
 import fs from "node:fs/promises";
+import fse from "fs-extra";
+import path from "node:path";
+
 import {
   createLiquid,
   extractDateFromFilename,
@@ -104,9 +107,13 @@ export async function renderContent(
   let processedContent;
 
   if (filePath.endsWith(".md")) {
+    const liquidProcessed = await liquid.parseAndRender(content, {
+      ...globals,
+      page: pageMeta,
+    });
     processedContent = markedInstance
-      ? markedInstance.parse(content)
-      : marked(content);
+      ? markedInstance.parse(liquidProcessed)
+      : marked(liquidProcessed);
   } else {
     processedContent = await liquid.parseAndRender(content, {
       ...globals,
@@ -118,6 +125,34 @@ export async function renderContent(
     frontmatter.layout === false ? null : frontmatter.layout || "base";
 
   if (!layout) return processedContent;
+
+  // Only render with a layout if the template actually exists in any template root
+  const roots = [
+    path.resolve(projectRoot, "_layouts"),
+    path.resolve(projectRoot, "_includes"),
+    path.resolve(projectRoot, "_partials"),
+    path.resolve(projectRoot, "_components"),
+  ].filter((dir) => fse.pathExistsSync(dir));
+
+  const candidates = layout.endsWith(".liquid")
+    ? [layout]
+    : [`${layout}.liquid`];
+
+  let templateFound = false;
+  for (const root of roots) {
+    for (const candidate of candidates) {
+      const fileToCheck = path.resolve(root, candidate);
+      if (await fse.pathExists(fileToCheck)) {
+        templateFound = true;
+        break;
+      }
+    }
+    if (templateFound) break;
+  }
+
+  if (!templateFound) {
+    return processedContent;
+  }
 
   const ctx = { ...globals, page: pageMeta, content: processedContent };
   return liquid.renderFile(layout, ctx);

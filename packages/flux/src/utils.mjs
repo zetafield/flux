@@ -12,13 +12,17 @@ export function extractDateFromFilename(filePath) {
 }
 
 export function createLiquid(projectRoot = process.cwd()) {
+  const rootsRaw = [
+    path.resolve(projectRoot, "_layouts"),
+    path.resolve(projectRoot, "_includes"),
+    path.resolve(projectRoot, "_partials"),
+    path.resolve(projectRoot, "_components"),
+  ];
+  const roots = rootsRaw.filter((dir) => fse.pathExistsSync(dir));
+  const effectiveRoots = roots.length > 0 ? roots : [projectRoot];
+
   return new Liquid({
-    root: [
-      path.resolve(projectRoot, "_layouts"),
-      path.resolve(projectRoot, "_includes"),
-      path.resolve(projectRoot, "_partials"),
-      path.resolve(projectRoot, "_components"),
-    ],
+    root: effectiveRoots,
     extname: ".liquid",
     cache: false,
   });
