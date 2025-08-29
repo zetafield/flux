@@ -1,5 +1,11 @@
 # @zetafield/flux
 
+## 0.1.1
+
+### Patch Changes
+
+- 5300bb6: fix: enhance content rendering with layout template checks
+
 ## 0.1.0
 
 ### Minor Changes
