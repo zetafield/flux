@@ -1,6 +1,6 @@
 {
 	"name": "@zetafield/create-flux",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Interactive scaffolding tool for creating new Flux static sites. Choose from templates and get started in seconds.",
 	"type": "module",
 	"bin": {
