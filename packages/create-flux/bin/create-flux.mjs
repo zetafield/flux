@@ -2,11 +2,12 @@
 import { cac } from "cac";
 import fse from "fs-extra";
 import fs from "node:fs/promises";
+import https from "node:https";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import pc from "picocolors";
 import prompts from "prompts";
-import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const __filename = fileURLToPath(import.meta.url);
@@ -15,7 +16,7 @@ const templatesDir = path.resolve(__dirname, "../templates");
 
 const cli = cac("create-flux");
 
-cli.version(require('../package.json').version);
+cli.version(require("../package.json").version);
 
 // Detect package manager from user agent or process
 function detectPackageManager() {
@@ -48,7 +49,6 @@ function toKebabCase(str) {
 
 async function scaffold(targetDir, options) {
   const dir = path.resolve(process.cwd(), targetDir);
-  const name = path.basename(dir);
   const packageManager = detectPackageManager();
   await fse.ensureDir(dir);
 
@@ -99,7 +99,9 @@ async function createTemplateContent(dir, options) {
   // Common package.json creation
   async function createPackageJson() {
     const workspaceRoot = await findWorkspaceRoot(dir);
-    const fluxVersion = workspaceRoot ? "workspace:*" : "^0.0.0";
+    const fluxVersion = workspaceRoot
+      ? "workspace:*"
+      : await resolveLatestVersion("@zetafield/flux");
 
     const pkg = {
       name: options.packageName || toKebabCase(name),
@@ -116,6 +118,48 @@ async function createTemplateContent(dir, options) {
       },
     };
     await writeJson(path.join(dir, "package.json"), pkg);
+  }
+
+  async function resolveLatestVersion(pkgName) {
+    try {
+      const encoded = pkgName.replace("/", "%2F");
+      const url = `https://registry.npmjs.org/${encoded}/latest`;
+      const data = await fetchJson(url);
+      if (data && typeof data.version === "string") {
+        return `^${data.version}`;
+      }
+    } catch {
+      // ignore and fall back
+    }
+    // Fallback ensures install grabs latest tag when version lookup fails
+    return "latest";
+  }
+
+  function fetchJson(url) {
+    return new Promise((resolve, reject) => {
+      https
+        .get(url, (res) => {
+          if (res.statusCode && res.statusCode >= 400) {
+            res.resume();
+            reject(new Error(`HTTP ${res.statusCode} for ${url}`));
+            return;
+          }
+          let raw = "";
+          res.setEncoding("utf8");
+          res.on("data", (chunk) => {
+            raw += chunk;
+          });
+          res.on("end", () => {
+            try {
+              const json = JSON.parse(raw);
+              resolve(json);
+            } catch (e) {
+              reject(e);
+            }
+          });
+        })
+        .on("error", reject);
+    });
   }
 
   // Replace placeholders in file content
@@ -199,7 +243,7 @@ cli
             );
             process.exit(1);
           }
-        } catch (error) {
+        } catch (_) {
           console.log(pc.red(`! Cannot access directory "${target}".`));
           console.log(pc.yellow("  Please check permissions."));
           process.exit(1);
@@ -241,7 +285,10 @@ cli
         name: "template",
         message: "Choose a starter template:",
         choices: [
-          { title: "Empty - Only package.json, build from scratch", value: "empty" },
+          {
+            title: "Empty - Only package.json, build from scratch",
+            value: "empty",
+          },
           { title: "Minimal - Homepage with basic layout", value: "minimal" },
           {
             title: "Blog - Ready for blogging with post layouts",
@@ -274,7 +321,7 @@ cli
           );
           process.exit(1);
         }
-      } catch (error) {
+      } catch (_) {
         console.log(
           pc.red(`! Cannot access directory "${response.targetDir.trim()}".`),
         );
@@ -294,15 +341,15 @@ cli
 
 cli
   .help((sections) => {
-    sections.push('');
-    sections.push('Examples:');
-    sections.push('  $ npm create @zetafield/flux');
-    sections.push('  $ npm create @zetafield/flux my-site -y');
-    sections.push('  $ pnpm create @zetafield/flux');
-    sections.push('');
-    sections.push('Templates:');
-    sections.push('  empty    Only package.json - build from scratch');
-    sections.push('  minimal  Homepage with basic layout (default)');
-    sections.push('  blog     Ready for blogging with post layouts');
+    sections.push("");
+    sections.push("Examples:");
+    sections.push("  $ npm create @zetafield/flux");
+    sections.push("  $ npm create @zetafield/flux my-site -y");
+    sections.push("  $ pnpm create @zetafield/flux");
+    sections.push("");
+    sections.push("Templates:");
+    sections.push("  empty    Only package.json - build from scratch");
+    sections.push("  minimal  Homepage with basic layout (default)");
+    sections.push("  blog     Ready for blogging with post layouts");
   })
   .parse();

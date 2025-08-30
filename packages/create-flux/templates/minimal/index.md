@@ -6,4 +6,6 @@ title: Home
 
 {{ data.site.description }}
 
-This is your homepage. Edit this file to get started.
+This is your homepage. Edit the `index.md` file to get started.
+
+Documentation: https://flux.zetafield.com

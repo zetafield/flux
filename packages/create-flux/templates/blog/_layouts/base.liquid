@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,18 +9,20 @@
       {{ data.site.name }}
     </title>
     <meta name="description" content="{{ page.description | default: data.site.description }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/css/main.css">
-    {% if page.css %}
-      {% for href in page.css %}
-        <link rel="stylesheet" href="{{ href }}">
-      {% endfor %}
-    {% endif %}
-    <link rel="icon" href="/favicon.svg">
   </head>
   <body>
     {% include 'header' %}
     <main>
+      {% block content %}
       {{ content }}
+      {% endblock %}
     </main>
   </body>
 </html>
