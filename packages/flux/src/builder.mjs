@@ -105,24 +105,24 @@ export class FluxBuilder {
 
     // Create Vite build config
     const viteConfig = {
-      // Start with user config
-      ...userConfig,
+      // Start with user's nested Vite config (if any)
+      ...(userConfig.vite || {}),
       // Override with Flux-specific settings
       root: this.tempRoot,
-      plugins: userConfig.plugins || [],
+      plugins: userConfig.vite?.plugins || [],
       publicDir: this.publicDir,
       build: {
-        ...userConfig.build,
+        ...(userConfig.vite?.build || {}),
         outDir: this.outDir,
         emptyOutDir: true,
         cssCodeSplit: true,
         modulePreload: false, // Disable module preload polyfill
         rollupOptions: {
-          ...userConfig.build?.rollupOptions,
+          ...(userConfig.vite?.build?.rollupOptions || {}),
           input: inputs,
           preserveEntrySignatures: "strict",
           output: {
-            ...userConfig.build?.rollupOptions?.output,
+            ...(userConfig.vite?.build?.rollupOptions?.output || {}),
             // Keep modules separate and route by type
             preserveModules: true,
             entryFileNames: "[name]-[hash].js",
@@ -158,7 +158,7 @@ export class FluxBuilder {
   }
 
   validateConfig(config, configPath) {
-    const allowedKeys = ["plugins", "markdown"];
+    const allowedKeys = ["markdown", "vite"];
 
     const validConfig = {};
     const warnings = [];

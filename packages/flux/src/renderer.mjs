@@ -27,7 +27,7 @@ export function resetHighlighter() {
 
 async function setupMarkdown(userConfig) {
   const mdConfig = userConfig?.markdown || {};
-  const enableHighlight = mdConfig.highlight !== false; // default: false
+  const enableHighlight = mdConfig.highlight === true; // default: false
 
   if (enableHighlight) {
     const lightTheme = mdConfig.themeLight || mdConfig.theme || "github-light";
@@ -82,6 +82,47 @@ async function setupMarkdown(userConfig) {
   }
 }
 
+function maskMarkdownCode(rawMarkdown) {
+  const codeBlocks = [];
+  const inlineCodes = [];
+
+  // Mask fenced code blocks first (supports optional language after backticks)
+  let masked = rawMarkdown.replace(
+    /```[\t ]*([\w-]+)?\n[\s\S]*?```/g,
+    (match) => {
+      const idx = codeBlocks.length;
+      codeBlocks.push(match);
+      return `__FLUX_CODE_BLOCK_${idx}__`;
+    },
+  );
+
+  // Mask inline code (simple, after fences are removed)
+  masked = masked.replace(/`[^`]*`/g, (match) => {
+    const idx = inlineCodes.length;
+    inlineCodes.push(match);
+    return `__FLUX_INLINE_CODE_${idx}__`;
+  });
+
+  return { masked, codeBlocks, inlineCodes };
+}
+
+function restoreMarkdownCode(maskedMarkdown, codeBlocks, inlineCodes) {
+  let restored = maskedMarkdown;
+  for (let i = 0; i < inlineCodes.length; i++) {
+    restored = restored.replace(
+      new RegExp(`__FLUX_INLINE_CODE_${i}__`, "g"),
+      inlineCodes[i],
+    );
+  }
+  for (let i = 0; i < codeBlocks.length; i++) {
+    restored = restored.replace(
+      new RegExp(`__FLUX_CODE_BLOCK_${i}__`, "g"),
+      codeBlocks[i],
+    );
+  }
+  return restored;
+}
+
 export async function renderContent(
   filePath,
   projectRoot = process.cwd(),
@@ -107,10 +148,19 @@ export async function renderContent(
   let processedContent;
 
   if (filePath.endsWith(".md")) {
-    const liquidProcessed = await liquid.parseAndRender(content, {
+    // Prevent Liquid from interpreting code in fenced/inline blocks by masking
+    const { masked, codeBlocks, inlineCodes } = maskMarkdownCode(content);
+
+    const liquidProcessedMasked = await liquid.parseAndRender(masked, {
       ...globals,
       page: pageMeta,
     });
+
+    const liquidProcessed = restoreMarkdownCode(
+      liquidProcessedMasked,
+      codeBlocks,
+      inlineCodes,
+    );
     processedContent = markedInstance
       ? markedInstance.parse(liquidProcessed)
       : marked(liquidProcessed);

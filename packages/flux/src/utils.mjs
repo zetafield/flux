@@ -120,3 +120,8 @@ export async function loadGlobals(projectRoot = process.cwd()) {
   ]);
   return { data, collections };
 }
+
+// Helper to aid editor IntelliSense for flux.config.mjs consumers
+export function defineConfig(config) {
+  return config;
+}

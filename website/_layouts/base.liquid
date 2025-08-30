@@ -16,6 +16,14 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/node_modules/modern-normalize/modern-normalize.css">
     <link rel="stylesheet" href="/assets/css/main.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Slab:wght@700&display=swap"
+      rel="stylesheet"
+    >
+
     {% if page.css %}
       {% for href in page.css %}
         <link rel="stylesheet" href="{{ href }}">

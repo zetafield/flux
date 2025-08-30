@@ -1,7 +1,20 @@
-export interface FluxOptions {
-	/** Enable clean URLs in dev/preview (serve "/file" for "file.*" and "/dir/" for "dir/index.*"). Default: true */
-	cleanUrls?: boolean;
+import type { UserConfig as ViteUserConfig } from "vite";
+
+export interface FluxMarkdownOptions {
+	/** Enable Shiki highlighting. Default: false */
+	highlight?: boolean;
+	/** Shiki light theme name */
+	themeLight?: string;
+	/** Shiki dark theme name */
+	themeDark?: string;
 }
 
-declare const _default: (options?: FluxOptions) => import("vite").Plugin;
-export default _default;
+export interface FluxUserConfig {
+	markdown?: FluxMarkdownOptions;
+	/** Nested Vite configuration */
+	vite?: ViteUserConfig;
+}
+
+export function defineConfig(config: FluxUserConfig): FluxUserConfig;
+
+export type { ViteUserConfig };

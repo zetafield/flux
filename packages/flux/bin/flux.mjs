@@ -31,7 +31,7 @@ async function loadUserConfig() {
 }
 
 function validateConfig(config, configPath) {
-  const allowedKeys = ["plugins", "markdown"];
+  const allowedKeys = ["markdown", "vite"];
 
   const validConfig = {};
   const warnings = [];
@@ -69,12 +69,12 @@ cli
       {
         plugins: [
           createDevPlugin(), // Minimal plugin for dev routing only
-          ...(userConfig.plugins || []),
+          ...(userConfig.vite?.plugins || []),
         ],
       },
       {
         server: { port: Number(options.port) },
-        ...userConfig, // Allow user to override other Vite options
+        ...(userConfig.vite || {}),
       },
     );
 
