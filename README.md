@@ -104,11 +104,20 @@ Optional configuration when needed:
 
 ```javascript
 // flux.config.js
+import { defineConfig } from "@zetafield/flux";
 import tailwind from "@tailwindcss/vite";
 
-export default {
-  plugins: [tailwind()],
-};
+export default defineConfig({
+  markdown: {
+    highlight: true,
+    themeLight: "light-plus",
+    themeDark: "tokyo-night",
+  },
+  vite: {
+    plugins: [tailwind()]
+  },
+});
+
 ```
 
 ## Commands
@@ -131,7 +140,7 @@ Build creates static files in `_site/` - deploy anywhere:
 
 ## Requirements
 
-- Node.js 18 or higher
+- Node.js 20.19 or higher
 - Package manager (npm, pnpm, yarn, or bun)
 
 ## Documentation
