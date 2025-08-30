@@ -1,5 +1,15 @@
 # @zetafield/flux
 
+## 0.2.0
+
+### Minor Changes
+
+- a61740e: feat: enhance Flux configuration options and markdown processing
+  - Updated Flux configuration to support nested Vite options.
+  - Enhanced markdown processing with code masking for better rendering.
+  - Refactored FluxBuilder and related files to utilize new configuration structure.
+  - Improved website styles and typography for better visual consistency.
+
 ## 0.1.1
 
 ### Patch Changes
