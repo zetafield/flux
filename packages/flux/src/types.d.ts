@@ -9,12 +9,15 @@ export interface FluxMarkdownOptions {
 	themeDark?: string;
 }
 
-export interface FluxUserConfig {
+export interface FluxConfig {
 	markdown?: FluxMarkdownOptions;
 	/** Nested Vite configuration */
 	vite?: ViteUserConfig;
 }
 
-export function defineConfig(config: FluxUserConfig): FluxUserConfig;
+export function defineConfig(config: FluxConfig): FluxConfig;
+
+// Backwards compatibility for older imports
+export type FluxUserConfig = FluxConfig;
 
 export type { ViteUserConfig };
