@@ -10,10 +10,7 @@ import { createDevPlugin } from "../src/dev-plugin.mjs";
 const cli = cac("flux");
 
 async function loadUserConfig() {
-  const configPaths = [
-    path.resolve("flux.config.mjs"),
-    path.resolve("flux.config.js"),
-  ];
+  const configPaths = [path.resolve("flux.config.mjs"), path.resolve("flux.config.js")];
 
   for (const configPath of configPaths) {
     try {
@@ -46,9 +43,7 @@ function validateConfig(config, configPath) {
 
   if (warnings.length > 0) {
     const relativePath = path.relative(".", configPath);
-    console.warn(
-      pc.yellow(`! Flux ignored unsupported options in ${relativePath}:`),
-    );
+    console.warn(pc.yellow(`! Flux ignored unsupported options in ${relativePath}:`));
     console.warn(pc.yellow(`  ${warnings.join(", ")}`));
     console.warn(pc.yellow(`  Supported: ${allowedKeys.join(", ")}`));
   }

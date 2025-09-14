@@ -46,15 +46,11 @@ export async function loadData(projectRoot = process.cwd()) {
 }
 
 export function shouldSkipDraft(filePath) {
-  return (
-    path.basename(filePath).startsWith("_") && process.env.FLUX_DRAFT !== "1"
-  );
+  return path.basename(filePath).startsWith("_") && process.env.FLUX_DRAFT !== "1";
 }
 
 export function cleanPath(filePath) {
-  return filePath
-    .replace(/\.(md|html)$/i, "")
-    .replace(/^\d{4}-\d{2}-\d{2}-/, "");
+  return filePath.replace(/\.(md|html)$/i, "").replace(/^\d{4}-\d{2}-\d{2}-/, "");
 }
 
 export function buildUrl(filePath) {

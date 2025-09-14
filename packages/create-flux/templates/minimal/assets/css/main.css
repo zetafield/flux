@@ -7,8 +7,11 @@
   --color-border: #e5e7eb;
   --color-surface: #f9fafb;
 
-  --font-sans: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  --font-sans:
+    system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
 body {
@@ -27,11 +30,7 @@ main {
 }
 
 /* Typography */
-h1,
-h2,
-h3 {
-  line-height: 1.35;
-}
+h1, h2, h3 { line-height: 1.35; }
 
 h1 {
   font-size: 2rem;
@@ -48,14 +47,9 @@ h3 {
   margin: 1.5rem 0 0.5rem;
 }
 
-p {
-  margin: 1rem 0;
-}
+p { margin: 1rem 0; }
 
-ul,
-ol {
-  padding-left: 1.25rem;
-}
+ul, ol { padding-left: 1.25rem; }
 
 code {
   background: var(--color-surface);
@@ -95,10 +89,6 @@ header nav {
   gap: 1rem;
 }
 
-header a {
-  color: var(--color-text);
-}
+header a { color: var(--color-text); }
 
-header a:hover {
-  color: var(--color-link);
-}
+header a:hover { color: var(--color-link); }

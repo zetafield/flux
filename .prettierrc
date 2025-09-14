@@ -1,5 +1,9 @@
 {
-	"width": 120,
-	"plugins": ["@shopify/prettier-plugin-liquid", "prettier-plugin-tailwindcss"],
-	"tailwindStylesheet": "./website/assets/css/tailwind.css"
+  "printWidth": 100,
+  "plugins": [
+    "@shopify/prettier-plugin-liquid",
+    "prettier-plugin-tailwindcss",
+    "prettier-plugin-css-singleline"
+  ],
+  "tailwindStylesheet": "./website/assets/css/tailwind.css"
 }

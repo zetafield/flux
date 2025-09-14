@@ -1,14 +1,14 @@
 [
-	{
-		"group": "Getting Started",
-		"items": [
-			{ "title": "Quick Start", "url": "/quick-start" },
-			{ "title": "Installation", "url": "/installation" },
-			{ "title": "Core Concepts", "url": "/concepts" }
-		]
-	},
-	{
-		"group": "More",
-		"items": [{ "title": "Deploy Your Site", "url": "/deploy" }]
-	}
+  {
+    "group": "Getting Started",
+    "items": [
+      { "title": "Quick Start", "url": "/quick-start" },
+      { "title": "Installation", "url": "/installation" },
+      { "title": "Core Concepts", "url": "/concepts" }
+    ]
+  },
+  {
+    "group": "More",
+    "items": [{ "title": "Deploy Your Site", "url": "/deploy" }]
+  }
 ]

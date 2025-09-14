@@ -207,15 +207,16 @@ Optional configuration when needed:
 import tailwind from "@tailwindcss/vite";
 
 export default {
-  markdown: { // powered by Shiki syntax highlighter
+  markdown: {
+    // powered by Shiki syntax highlighter
     highlight: true,
     themeLight: "light-plus",
     themeDark: "tokyo-night",
   },
   vite: {
     // Vite config options
-    plugins: [tailwind()]
-  }
+    plugins: [tailwind()],
+  },
 };
 ```
 

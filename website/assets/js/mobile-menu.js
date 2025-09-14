@@ -10,10 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Close mobile menu when clicking outside
     document.addEventListener("click", function (event) {
-      if (
-        !mobileMenuButton.contains(event.target) &&
-        !mobileMenu.contains(event.target)
-      ) {
+      if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
         mobileMenu.classList.remove("show");
       }
     });

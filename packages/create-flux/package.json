@@ -1,28 +1,28 @@
 {
-	"name": "@zetafield/create-flux",
-	"version": "0.1.1",
-	"description": "Interactive scaffolding tool for creating new Flux static sites. Choose from templates and get started in seconds.",
-	"type": "module",
-	"bin": {
-		"create-flux": "bin/create-flux.mjs"
-	},
-	"files": [
-		"bin",
-		"templates",
-		"README.md",
-		"LICENSE"
-	],
-	"engines": {
-		"node": ">=20.19"
-	},
-	"license": "MIT",
-	"scripts": {
-		"build": "echo \"No build step yet\""
-	},
-	"dependencies": {
-		"cac": "^6.7.14",
-		"fs-extra": "^11.2.0",
-		"picocolors": "^1.0.0",
-		"prompts": "^2.4.2"
-	}
+  "name": "@zetafield/create-flux",
+  "version": "0.1.1",
+  "description": "Interactive scaffolding tool for creating new Flux static sites. Choose from templates and get started in seconds.",
+  "type": "module",
+  "bin": {
+    "create-flux": "bin/create-flux.mjs"
+  },
+  "files": [
+    "bin",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "echo \"No build step yet\""
+  },
+  "dependencies": {
+    "cac": "^6.7.14",
+    "fs-extra": "^11.2.0",
+    "picocolors": "^1.0.0",
+    "prompts": "^2.4.2"
+  }
 }

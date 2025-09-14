@@ -176,8 +176,7 @@ async function createTemplateContent(dir, options) {
     const templatePath = path.join(templatesDir, templateName);
     const replacements = {
       "{{PROJECT_NAME}}": options.projectName || name,
-      "{{PROJECT_DESCRIPTION}}":
-        options.description || "A static site built with Flux",
+      "{{PROJECT_DESCRIPTION}}": options.description || "A static site built with Flux",
     };
 
     // Copy all files from template directory
@@ -188,10 +187,7 @@ async function createTemplateContent(dir, options) {
         await fse.ensureDir(dest);
         const entries = await fs.readdir(src);
         for (const entry of entries) {
-          await copyWithPlaceholders(
-            path.join(src, entry),
-            path.join(dest, entry),
-          );
+          await copyWithPlaceholders(path.join(src, entry), path.join(dest, entry));
         }
       } else {
         const content = await fs.readFile(src, "utf8");
@@ -236,11 +232,7 @@ cli
           const items = await fs.readdir(targetPath);
           if (items.length > 0) {
             console.log(pc.red(`! Directory "${target}" is not empty.`));
-            console.log(
-              pc.yellow(
-                "  Please choose an empty directory or remove existing files.",
-              ),
-            );
+            console.log(pc.yellow("  Please choose an empty directory or remove existing files."));
             process.exit(1);
           }
         } catch (_) {
@@ -311,20 +303,12 @@ cli
       try {
         const items = await fs.readdir(targetPath);
         if (items.length > 0) {
-          console.log(
-            pc.red(`! Directory "${response.targetDir.trim()}" is not empty.`),
-          );
-          console.log(
-            pc.yellow(
-              "  Please run the command again with an empty directory.",
-            ),
-          );
+          console.log(pc.red(`! Directory "${response.targetDir.trim()}" is not empty.`));
+          console.log(pc.yellow("  Please run the command again with an empty directory."));
           process.exit(1);
         }
       } catch (_) {
-        console.log(
-          pc.red(`! Cannot access directory "${response.targetDir.trim()}".`),
-        );
+        console.log(pc.red(`! Cannot access directory "${response.targetDir.trim()}".`));
         console.log(pc.yellow("  Please check permissions and try again."));
         process.exit(1);
       }
@@ -333,8 +317,7 @@ cli
     await scaffold(response.targetDir.trim(), {
       projectName: response.projectName.trim(),
       packageName: toKebabCase(response.projectName.trim()),
-      description:
-        response.description?.trim() || "A static site built with Flux",
+      description: response.description?.trim() || "A static site built with Flux",
       template: response.template,
     });
   });

@@ -36,9 +36,7 @@ export class FluxBuilder {
       await this.cleanup();
 
       console.log(
-        pc.green(
-          `✓ Build complete! Output in ${path.relative(this.projectRoot, this.outDir)}`,
-        ),
+        pc.green(`✓ Build complete! Output in ${path.relative(this.projectRoot, this.outDir)}`),
       );
     } catch (error) {
       await this.cleanup();
@@ -173,9 +171,7 @@ export class FluxBuilder {
 
     if (warnings.length > 0) {
       const relativePath = path.relative(this.projectRoot, configPath);
-      console.warn(
-        pc.yellow(`! Flux ignored unsupported options in ${relativePath}:`),
-      );
+      console.warn(pc.yellow(`! Flux ignored unsupported options in ${relativePath}:`));
       console.warn(pc.yellow(`  ${warnings.join(", ")}`));
       console.warn(pc.yellow(`  Supported: ${allowedKeys.join(", ")}`));
     }

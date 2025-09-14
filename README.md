@@ -35,7 +35,7 @@ Visit `http://localhost:3589` and start building.
 - Live reloading during development
 - Markdown support for content
 - Liquid templates for layouts
-- Optimized builds for production  
+- Optimized builds for production
 - Deploy anywhere - static files only
 
 ## Templates
@@ -93,7 +93,9 @@ Templates use [Liquid](https://liquidjs.com/) for dynamic content:
 <p>Welcome to {{ data.site.name }}!</p>
 
 {% for post in collections.blog %}
-  <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+  <h2>
+    <a href="{{ post.url }}">{{ post.title }}</a>
+  </h2>
   <time>{{ post.date | date: '%B %d, %Y' }}</time>
 {% endfor %}
 ```
@@ -114,17 +116,16 @@ export default defineConfig({
     themeDark: "tokyo-night",
   },
   vite: {
-    plugins: [tailwind()]
+    plugins: [tailwind()],
   },
 });
-
 ```
 
 ## Commands
 
 ```bash
 npm run dev      # Start development server (http://localhost:3589)
-npm run build    # Build for production (_site/ folder)  
+npm run build    # Build for production (_site/ folder)
 npm run preview  # Preview production build (http://localhost:4589)
 ```
 
@@ -133,7 +134,7 @@ npm run preview  # Preview production build (http://localhost:4589)
 Build creates static files in `_site/` - deploy anywhere:
 
 - **Netlify** - Connect your repo, set build command to `npm run build`
-- **Vercel** - Auto-detects and deploys  
+- **Vercel** - Auto-detects and deploys
 - **Cloudflare Pages** - Fast global CDN
 - **GitHub Pages** - Enable in repo settings
 - **Your own server** - Copy the `_site/` folder
@@ -146,7 +147,7 @@ Build creates static files in `_site/` - deploy anywhere:
 ## Documentation
 
 - [Installation](https://flux.zetafield.com/installation)
-- [Quick Start](https://flux.zetafield.com/quick-start)  
+- [Quick Start](https://flux.zetafield.com/quick-start)
 - [Core Concepts](https://flux.zetafield.com/concepts)
 - [Deploy Your Site](https://flux.zetafield.com/deploy)
 

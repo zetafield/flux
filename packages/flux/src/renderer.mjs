@@ -5,11 +5,7 @@ import fs from "node:fs/promises";
 import fse from "fs-extra";
 import path from "node:path";
 
-import {
-  createLiquid,
-  extractDateFromFilename,
-  loadGlobals,
-} from "./utils.mjs";
+import { createLiquid, extractDateFromFilename, loadGlobals } from "./utils.mjs";
 
 let shikiHighlighter = null;
 let markedInstance = null;
@@ -87,14 +83,11 @@ function maskMarkdownCode(rawMarkdown) {
   const inlineCodes = [];
 
   // Mask fenced code blocks first (supports optional language after backticks)
-  let masked = rawMarkdown.replace(
-    /```[\t ]*([\w-]+)?\n[\s\S]*?```/g,
-    (match) => {
-      const idx = codeBlocks.length;
-      codeBlocks.push(match);
-      return `__FLUX_CODE_BLOCK_${idx}__`;
-    },
-  );
+  let masked = rawMarkdown.replace(/```[\t ]*([\w-]+)?\n[\s\S]*?```/g, (match) => {
+    const idx = codeBlocks.length;
+    codeBlocks.push(match);
+    return `__FLUX_CODE_BLOCK_${idx}__`;
+  });
 
   // Mask inline code (simple, after fences are removed)
   masked = masked.replace(/`[^`]*`/g, (match) => {
@@ -109,25 +102,15 @@ function maskMarkdownCode(rawMarkdown) {
 function restoreMarkdownCode(maskedMarkdown, codeBlocks, inlineCodes) {
   let restored = maskedMarkdown;
   for (let i = 0; i < inlineCodes.length; i++) {
-    restored = restored.replace(
-      new RegExp(`__FLUX_INLINE_CODE_${i}__`, "g"),
-      inlineCodes[i],
-    );
+    restored = restored.replace(new RegExp(`__FLUX_INLINE_CODE_${i}__`, "g"), inlineCodes[i]);
   }
   for (let i = 0; i < codeBlocks.length; i++) {
-    restored = restored.replace(
-      new RegExp(`__FLUX_CODE_BLOCK_${i}__`, "g"),
-      codeBlocks[i],
-    );
+    restored = restored.replace(new RegExp(`__FLUX_CODE_BLOCK_${i}__`, "g"), codeBlocks[i]);
   }
   return restored;
 }
 
-export async function renderContent(
-  filePath,
-  projectRoot = process.cwd(),
-  userConfig = {},
-) {
+export async function renderContent(filePath, projectRoot = process.cwd(), userConfig = {}) {
   const raw = await fs.readFile(filePath, "utf8");
   const { content, data: frontmatter } = matter(raw);
 
@@ -156,11 +139,7 @@ export async function renderContent(
       page: pageMeta,
     });
 
-    const liquidProcessed = restoreMarkdownCode(
-      liquidProcessedMasked,
-      codeBlocks,
-      inlineCodes,
-    );
+    const liquidProcessed = restoreMarkdownCode(liquidProcessedMasked, codeBlocks, inlineCodes);
     processedContent = markedInstance
       ? markedInstance.parse(liquidProcessed)
       : marked(liquidProcessed);
@@ -171,8 +150,7 @@ export async function renderContent(
     });
   }
 
-  const layout =
-    frontmatter.layout === false ? null : frontmatter.layout || "base";
+  const layout = frontmatter.layout === false ? null : frontmatter.layout || "base";
 
   if (!layout) return processedContent;
 
@@ -184,9 +162,7 @@ export async function renderContent(
     path.resolve(projectRoot, "_components"),
   ].filter((dir) => fse.pathExistsSync(dir));
 
-  const candidates = layout.endsWith(".liquid")
-    ? [layout]
-    : [`${layout}.liquid`];
+  const candidates = layout.endsWith(".liquid") ? [layout] : [`${layout}.liquid`];
 
   let templateFound = false;
   for (const root of roots) {

@@ -1,53 +1,53 @@
 {
-	"name": "@zetafield/flux",
-	"version": "0.2.0",
-	"description": "A minimalistic static site generator that makes building websites fun again. Perfect for learning web fundamentals.",
-	"type": "module",
-	"main": "src/plugin.mjs",
+  "name": "@zetafield/flux",
+  "version": "0.2.0",
+  "description": "A minimalistic static site generator that makes building websites fun again. Perfect for learning web fundamentals.",
+  "type": "module",
+  "main": "src/plugin.mjs",
   "types": "src/types.d.ts",
-	"bin": {
-		"flux": "bin/flux.mjs"
-	},
-	"exports": {
-		".": {
-			"import": "./src/plugin.mjs",
-			"types": "./src/types.d.ts"
-		}
-	},
-	"files": [
-		"bin",
-		"src",
-		"README.md",
-		"LICENSE"
-	],
-	"engines": {
-		"node": ">=20.19"
-	},
-	"license": "MIT",
-	"keywords": [
-		"ssg",
-		"vite",
-		"liquid",
-		"static-site"
-	],
-	"scripts": {
-		"build": "echo \"package build: nothing to compile\"",
-		"dev": "node ./bin/flux.mjs dev",
-		"preview": "node ./bin/flux.mjs preview"
-	},
-	"dependencies": {
-		"cac": "^6.7.14",
-		"chokidar": "^3.6.0",
-		"fast-glob": "^3.3.2",
-		"fs-extra": "^11.2.0",
-		"gray-matter": "^4.0.3",
-		"liquidjs": "^10.13.0",
-		"marked": "^12.0.2",
-		"shiki": "^1.22.2",
-		"prettier": "^3.3.3",
-		"picocolors": "^1.0.0",
-		"polka": "^0.5.2",
-		"sirv": "^2.0.4",
-		"vite": "^7.0.0"
-	}
+  "bin": {
+    "flux": "bin/flux.mjs"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/plugin.mjs",
+      "types": "./src/types.d.ts"
+    }
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ssg",
+    "vite",
+    "liquid",
+    "static-site"
+  ],
+  "scripts": {
+    "build": "echo \"package build: nothing to compile\"",
+    "dev": "node ./bin/flux.mjs dev",
+    "preview": "node ./bin/flux.mjs preview"
+  },
+  "dependencies": {
+    "cac": "^6.7.14",
+    "chokidar": "^3.6.0",
+    "fast-glob": "^3.3.2",
+    "fs-extra": "^11.2.0",
+    "gray-matter": "^4.0.3",
+    "liquidjs": "^10.13.0",
+    "marked": "^12.0.2",
+    "shiki": "^1.22.2",
+    "prettier": "^3.3.3",
+    "picocolors": "^1.0.0",
+    "polka": "^0.5.2",
+    "sirv": "^2.0.4",
+    "vite": "^7.0.0"
+  }
 }
